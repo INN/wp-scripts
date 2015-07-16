@@ -14,8 +14,7 @@ class LargoVersionStatus extends WPScriptCmd {
 		if (!empty($this->blog_id))
 			$site_blog_ids = array((object) array('blog_id' => $this->blog_id));
 		else
-			$site_blog_ids = $wpdb->get_results($wpdb->prepare(
-				"SELECT blog_id FROM wp_blogs where blog_id > 1"));
+			$site_blog_ids = $wpdb->get_results("SELECT blog_id FROM wp_blogs where blog_id > 1");
 
 		$ret = '';
 		foreach ($site_blog_ids as $b) {
