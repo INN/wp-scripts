@@ -22,9 +22,9 @@ class LargoVersionStatus extends WPScriptCmd {
 			switch_to_blog($b->blog_id);
 			$stored_largo_version = of_get_option('largo_version');
 			if (!empty($stored_largo_version))
-				$data[$stored_largo_version][] = get_bloginfo('name');
+				$data[$stored_largo_version][] = array('name' =>get_bloginfo('name'), 'url' => get_bloginfo('url'));
 			else
-				$data['No version specified'][] = get_bloginfo('name');
+				$data['No version specified'][] = array('name' => get_bloginfo('name'), 'url' => get_bloginfo('url'));
 
 			restore_current_blog();
 		}
@@ -39,8 +39,9 @@ class LargoVersionStatus extends WPScriptCmd {
 
 		foreach ($data as $label => $sites) {
 			$ret .= 'Largo version: ' . $label . "\n";
-			foreach ($sites as $site)
-				$ret .= "    " . $site . "\n";
+			foreach ($sites as $site) {
+				$ret .= "    " . $site['name'] . " (" . $site['url'] . ")\n";
+			}
 			$ret .= "\n";
 		}
 
