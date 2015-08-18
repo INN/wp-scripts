@@ -19,6 +19,10 @@ class RunLargoUpdates extends WPScriptCmd {
 		else
 			$site_blog_ids = $wpdb->get_results("SELECT blog_id FROM wp_blogs where blog_id > 1");
 
+		include_once ABSPATH . 'wp-admin/includes/screen.php';
+		include_once get_template_directory() . '/inc/custom-less-variables.php';
+		include_once get_template_directory() . '/options.php';
+
 		$data = array();
 		$ret = '';
 		foreach ($site_blog_ids as $b) {
@@ -27,9 +31,9 @@ class RunLargoUpdates extends WPScriptCmd {
 			if (function_exists('largo_perform_update')) {
 				$result = largo_perform_update();
 				if (!empty($result))
-					print "Succesfully updated: " . $blog['domain'] . "\n";
+					print "Succesfully updated: " . get_bloginfo('name') . "\n";
 				else
-					print "Error updating: " . $blog['domain'] . "\n";
+					print "Error updating: " . get_bloginfo('name') . "\n";
 			}
 
 			restore_current_blog();
